@@ -1,0 +1,63 @@
+/*---------------------------------------------------------------
+Zones principales de la page
+-----------------------------------------------------------------*/
+body {
+	margin : 0;
+}
+
+/*---------------------------------------------------------------
+Typographie et style des entêtes
+-----------------------------------------------------------------*/
+body {
+	font-family: sans-serif;
+}
+
+h1 {
+	font-family: Abalone,Broadway,"Lucida Handwriting", cursive;
+	background-color: #000000;
+	color : white;
+	margin-top : 0;
+	padding : 0.5em;
+}
+
+/* Traitement des erreurs dans le formulaire
+-----------------------------------------------------------------*/
+#erreurfruits{
+	border : 1px solid darkred;
+	background-color : rgba(139,0,0,0.1);
+	color : darkred;
+	padding : 1em;
+	margin-bottom : 3em;
+	width : 90%;
+}
+
+
+#erreurpeches, #erreurpoires, #erreurpommes {
+	background-color : rgba(139,0,0,0.1);
+	color : darkred;
+}
+
+.invisible{
+	display: none;
+}
+
+/*---------------------------------------------------------------
+Tableaux
+-----------------------------------------------------------------*/
+table {
+	border-collapse : collapse;
+	margin-bottom : 1em;
+}
+
+thead th, tbody td {
+	border-bottom : 1px solid black;
+	padding : 1em;
+}
+
+tfoot * {
+	padding : 1em;
+}
+
+#total {
+	text-align : right;
+}
