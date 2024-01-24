@@ -1,10 +1,10 @@
 // Classe Fruit avec une méthode toString()
 class Fruit {
     constructor(nom, prix, quantite = 0, sous_total = 0) {
-        this.nom = nom;
-        this.prix = prix;
-        this.quantite = quantite;
-        this.sous_total = sous_total;
+        this.nom = nom
+        this.prix = prix
+        this.quantite = quantite
+        this.sous_total = sous_total
     }
 
     toString() {
@@ -15,14 +15,14 @@ class Fruit {
 // Classe Panier avec deux méthodes : modifierFruit(nomFruit) et toString()
 class Panier {
     constructor(peches, poires, pommes, total = 0, nbfruits = 0) {
-        this.peches = peches;
-        this.poires = poires;
-        this.pommes = pommes;
-        this.total = total;
-        this.nbfruits = nbfruits;
+        this.peches = peches
+        this.poires = poires
+        this.pommes = pommes
+        this.total = total
+        this.nbfruits = nbfruits
     }
 
-    // Lorsque l'on utilise la méthode modifierFruit(nomFruit) de la classe Panier, on met à jour les éléments du panier et les affichages
+    // Méthode de la classe Panier, qui met à jour les éléments du panier et les affichages
     modifierFruit(nomFruit) {
         switch (nomFruit) {
             case "peche":
@@ -52,108 +52,107 @@ class Panier {
     }
 
     toString() {
-        return this.peches.toString() + "+<br>" + this.poires.toString() + "+<br>" + this.pommes.toString() + "=<br>" + this.total  + "$ pour " + this.nbfruits + " sac(s) de fruits";
+        return this.peches.toString() + "+<br>" + this.poires.toString() + "+<br>" + this.pommes.toString() + "=<br>" + this.total  + "$ pour " + this.nbfruits + " sac(s) de fruits"
     }
 }
 
-// Initialiser ou réinitialiser le panier avec trois objets de la classe Fruit, en utilisant le constructeur de Fruit avec les noms des fruits
+// Méthode pour initialiser ou réinitialiser le panier avec trois objets de la classe Fruit, en utilisant le constructeur de Fruit avec les noms des fruits
 // et leurs prix respectifs, et avec une quantité et un sous-total de 0 pour chaque fruit (par défaut)
-// Aussi, mettre à jour les affichages
+// Aussi, mettre à jour tous les affichages
 function Initialiser() {
     peches = new Fruit("peche", parseInt(document.getElementById("prixpeches").textContent))
     poires = new Fruit("poire", parseInt(document.getElementById("prixpoires").textContent))
     pommes = new Fruit("pomme", parseInt(document.getElementById("prixpommes").textContent))
-    panier = new Panier(peches, poires, pommes);
+    panier = new Panier(peches, poires, pommes)
 
-    document.getElementById("submit").disabled = true;
-    document.getElementById("nbpeches").value = 0;
-    document.getElementById("nbpoires").value = 0;
-    document.getElementById("nbpommes").value = 0;
-    document.getElementById("totalpeches").textContent = "0$";
-    document.getElementById("totalpoires").textContent = "0$";
-    document.getElementById("totalpommes").textContent = "0$";
-    document.getElementById("totalfruits").textContent = "0$";
+    document.getElementById("submit").disabled = true
+    document.getElementById("nbpeches").value = 0
+    document.getElementById("nbpoires").value = 0
+    document.getElementById("nbpommes").value = 0
+    document.getElementById("totalpeches").textContent = "0$"
+    document.getElementById("totalpoires").textContent = "0$"
+    document.getElementById("totalpommes").textContent = "0$"
+    document.getElementById("totalfruits").textContent = "0$"
 
-    document.querySelector("#erreurpeches").classList.add('invisible');
-    document.querySelector("#erreurpoires").classList.add('invisible');
-    document.querySelector("#erreurpommes").classList.add('invisible');
-    document.querySelector("#erreurfruits").classList.add('invisible');
+    ajouterInvisible()
+    document.querySelector("#erreurfruits").classList.add('invisible')
 }
 
-// Activer ou désactiver le bouton Envoyer, tout dépendamment si la case est cochée ou pas
+// Méthode pour activer ou désactiver le bouton Envoyer, tout dépendamment si la case est cochée ou pas
 function Activer_Desactiver() {
     if (document.getElementById("conditions").checked) {
-        document.getElementById("submit").disabled = false;
+        document.getElementById("submit").disabled = false
     } else {
-        document.getElementById("submit").disabled = true;
+        document.getElementById("submit").disabled = true
     }
 }
 
-// Valider, puis envoyer les valeurs du formulaire si le formulaire est valide
+// Méthode qui valide, puis qui envoie les valeurs du formulaire si le formulaire est valide
 function Envoyer() {
     if (panier.nbfruits < 25 && ValiderCoutTotal()) {
-        sessionStorage.setItem("panier", panier.toString()); // Inscrire le panier dans la session pour y avoir accès sur la deuxième page.
-        document.getElementById("conditions").checked = false;
+        sessionStorage.setItem("panier", panier.toString()) // Inscrire le panier dans la session pour y avoir accès sur la deuxième page.
+        document.getElementById("conditions").checked = false
 
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
 }
 
-// Tout dépendamment de la catégorie pFruits, on appelle la méthode modifierFruit(nomFruit) de l'objet panier, et on affiche ou pas
-// un message d'erreur en conséquence de l'évaluation des valeurs fournies
+// Méthode qui appelle la méthode modifierFruit(nomFruit) de l'objet panier, puis qui affiche ou pas un message d'erreur tout
+// dépendamment de la validation des valeurs fournies
 function Valider_et_Afficher(pFruits) {
     panier.modifierFruit(pFruits)
 
     switch (pFruits) { 
         case "peche":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal();
+                ValiderCoutTotal()
 
-                document.querySelector("#erreurpeches").classList.add('invisible');
-                document.querySelector("#erreurpoires").classList.add('invisible');
-                document.querySelector("#erreurpommes").classList.add('invisible');
+                ajouterInvisible()
             } else {
                 document.querySelector("#erreurpeches").classList.remove('invisible');
             }
-            break;
+            break
 
         case "poire":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal();
+                ValiderCoutTotal()
 
-                document.querySelector("#erreurpeches").classList.add('invisible');
-                document.querySelector("#erreurpoires").classList.add('invisible');
-                document.querySelector("#erreurpommes").classList.add('invisible');
+                ajouterInvisible()
             } else {
                 document.querySelector("#erreurpoires").classList.remove('invisible');
             }
-            break;
+            break
 
         case "pomme":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal();
+                ValiderCoutTotal()
 
-                document.querySelector("#erreurpeches").classList.add('invisible');
-                document.querySelector("#erreurpoires").classList.add('invisible');
-                document.querySelector("#erreurpommes").classList.add('invisible');
+                ajouterInvisible()
             } else {
                 document.querySelector("#erreurpommes").classList.remove('invisible');
             }
-            break;
+            break
     }
 }
 
-// Vérifier que le coût total est égal ou supérieur à 20$
+// Méthode pour vérifier que le coût total est égal ou supérieur à 20$
 function ValiderCoutTotal() {
     if (panier.total >= 20) {
-        document.querySelector("#erreurfruits").classList.add('invisible');
+        document.querySelector("#erreurfruits").classList.add('invisible')
 
-        return true;
+        return true
     } else {
-        document.querySelector("#erreurfruits").classList.remove('invisible');
+        document.querySelector("#erreurfruits").classList.remove('invisible')
 
-        return false;
+        return false
     }
+}
+
+// Méthode pour rendre invisible les messages d'erreur
+function ajouterInvisible() {
+    document.querySelector("#erreurpeches").classList.add('invisible')
+    document.querySelector("#erreurpoires").classList.add('invisible')
+    document.querySelector("#erreurpommes").classList.add('invisible')
 }
