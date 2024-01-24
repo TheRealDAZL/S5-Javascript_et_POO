@@ -1,5 +1,6 @@
+// Classe Fruit avec une méthode toString()
 class Fruit {
-    constructor(nom, prix, quantite= 0, sous_total= 0) {
+    constructor(nom, prix, quantite = 0, sous_total = 0) {
         this.nom = nom;
         this.prix = prix;
         this.quantite = quantite;
@@ -7,10 +8,11 @@ class Fruit {
     }
 
     toString() {
-        return this.sous_total + "$ pour " + this.quantite + " " + this.nom + "(s) " + " à un prix de " + this.prix + "$ chaque <br>+<br>"
+        return this.sous_total + "$ pour " + this.quantite + " de sac(s) de " + this.nom + "s à un prix de " + parseInt(this.prix) + "$ chaque <br>"
     }
 }
 
+// Classe Panier avec deux méthodes : modifierFruit(nomFruit) et toString()
 class Panier {
     constructor(peches, poires, pommes, total = 0, nbfruits = 0) {
         this.peches = peches;
@@ -20,43 +22,48 @@ class Panier {
         this.nbfruits = nbfruits;
     }
 
-    ajouterFruit(nomFruit) {
+    // Lorsque l'on utilise la méthode modifierFruit(nomFruit) de la classe Panier, on met à jour les éléments du panier et les affichages
+    modifierFruit(nomFruit) {
         switch (nomFruit) {
             case "peche":
-                this.peches.prix = parseInt(document.getElementById("prixpeches").textContent); // Obtenir le prix à partir du HTML
                 this.peches.quantite = parseInt(document.getElementById("nbpeches").value)
                 this.peches.sous_total = this.peches.quantite * this.peches.prix
 
                 break
             case "poire":
-                this.poires.prix = parseInt(document.getElementById("prixpoires").textContent)
                 this.poires.quantite = parseInt(document.getElementById("nbpoires").value)
                 this.poires.sous_total = this.poires.quantite * this.poires.prix
+
                 break
             case "pomme":
-                this.pommes.prix = parseInt(document.getElementById("prixpommes").textContent)
                 this.pommes.quantite = parseInt(document.getElementById("nbpommes").value)
                 this.pommes.sous_total = this.pommes.quantite * this.pommes.prix
+
                 break
         }
 
         this.total = this.peches.sous_total + this.poires.sous_total + this.pommes.sous_total
         this.nbfruits = this.peches.quantite + this.poires.quantite + this.pommes.quantite
+
+        document.getElementById("totalpeches").textContent = parseInt(panier.peches.sous_total) + "$"
+        document.getElementById("totalpoires").textContent = parseInt(panier.poires.sous_total) + "$"
+        document.getElementById("totalpommes").textContent = parseInt(panier.pommes.sous_total) + "$"
+        document.getElementById("totalfruits").textContent = panier.total + "$"
     }
 
     toString() {
-        return this.peches + this.poires + this.pommes + this.total  + "$ pour " + this.nbfruits + " fruit(s)";
+        return this.peches.toString() + "+<br>" + this.poires.toString() + "+<br>" + this.pommes.toString() + "=<br>" + this.total  + "$ pour " + this.nbfruits + " sac(s) de fruits";
     }
 }
 
-// Initialiser le panier avec les fruits et leurs prix respectifs, et avec une quantité de fruits et un coût de 0 par défaut
+// Initialiser ou réinitialiser le panier avec trois objets de la classe Fruit, en utilisant le constructeur de Fruit avec les noms des fruits
+// et leurs prix respectifs, et avec une quantité et un sous-total de 0 pour chaque fruit (par défaut)
+// Aussi, mettre à jour les affichages
 function Initialiser() {
-    panier = new Panier(
-             new Fruit("peche", document.getElementById("prixpeches").textContent, 0, 0),
-             new Fruit("poire", document.getElementById("prixpoires").textContent, 0, 0),
-             new Fruit("pomme", document.getElementById("prixpommes").textContent, 0, 0),
-             0,
-             0);  // Seul le panier va être global. On l'initialise au chargement de la page.
+    peches = new Fruit("peche", parseInt(document.getElementById("prixpeches").textContent))
+    poires = new Fruit("poire", parseInt(document.getElementById("prixpoires").textContent))
+    pommes = new Fruit("pomme", parseInt(document.getElementById("prixpommes").textContent))
+    panier = new Panier(peches, poires, pommes);
 
     document.getElementById("submit").disabled = true;
     document.getElementById("nbpeches").value = 0;
@@ -73,14 +80,31 @@ function Initialiser() {
     document.querySelector("#erreurfruits").classList.add('invisible');
 }
 
-// Tout dépendamment de la catégorie pFruits, on évalue la quantité totale de fruits, et on affiche ou pas un message d'erreur en conséquence de cette évaluation
-function Valider_et_Afficher(pFruits) {
-    panier.ajouterFruit(pFruits)
+// Activer ou désactiver le bouton Envoyer, tout dépendamment si la case est cochée ou pas
+function Activer_Desactiver() {
+    if (document.getElementById("conditions").checked) {
+        document.getElementById("submit").disabled = false;
+    } else {
+        document.getElementById("submit").disabled = true;
+    }
+}
 
-    document.getElementById("totalpeches").textContent = parseInt(panier.peches.sous_total) + "$";
-    document.getElementById("totalpoires").textContent = parseInt(panier.poires.sous_total) + "$";
-    document.getElementById("totalpommes").textContent = parseInt(panier.pommes.sous_total) + "$";
-    document.getElementById("totalfruits").textContent = panier.total + "$";
+// Valider, puis envoyer les valeurs du formulaire si le formulaire est valide
+function Envoyer() {
+    if (panier.nbfruits < 25 && ValiderCoutTotal()) {
+        sessionStorage.setItem("panier", panier.toString()); // Inscrire le panier dans la session pour y avoir accès sur la deuxième page.
+        document.getElementById("conditions").checked = false;
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Tout dépendamment de la catégorie pFruits, on appelle la méthode modifierFruit(nomFruit) de l'objet panier, et on affiche ou pas
+// un message d'erreur en conséquence de l'évaluation des valeurs fournies
+function Valider_et_Afficher(pFruits) {
+    panier.modifierFruit(pFruits)
 
     switch (pFruits) { 
         case "peche":
@@ -132,26 +156,4 @@ function ValiderCoutTotal() {
 
         return false;
     }
-}
-
-// Activer ou désactiver le bouton, tout dépendamment si la case est cochée ou pas
-function Activer_Desactiver() {
-    if (document.getElementById("conditions").checked) {
-        document.getElementById("submit").disabled = false;
-    } else {
-        document.getElementById("submit").disabled = true;
-    }
-}
-
-// Valider, puis envoyer les valeurs du formulaire
-function Envoyer() {
-    if (panier.nbfruits < 25 && ValiderCoutTotal()) {
-        sessionStorage.setItem("panier", panier.toString()); // Inscrire le panier dans la session pour y avoir accès sur la deuxième page.
-        document.getElementById("conditions").checked = false;
-
-        return true;
-    } else {
-        return false;
-    }
-
 }
