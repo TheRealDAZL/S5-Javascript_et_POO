@@ -8,7 +8,7 @@ class Fruit {
     }
 
     toString() {
-        return this.sous_total + "$ pour " + this.quantite + " de sac(s) de " + this.nom + "s à un prix de " + parseInt(this.prix) + "$ chaque <br>"
+        return this.sous_total + "$ pour " + this.quantite + " sac(s) de " + this.nom + "s à un prix de " + parseInt(this.prix) + "$ chaque <br>"
     }
 }
 
@@ -59,7 +59,7 @@ class Panier {
 // Méthode pour initialiser ou réinitialiser le panier avec trois objets de la classe Fruit, en utilisant le constructeur de Fruit avec les noms des fruits
 // et leurs prix respectifs, et avec une quantité et un sous-total de 0 pour chaque fruit (par défaut)
 // Aussi, mettre à jour tous les affichages
-function Initialiser() {
+function initialiser() {
     peches = new Fruit("peche", parseInt(document.getElementById("prixpeches").textContent))
     poires = new Fruit("poire", parseInt(document.getElementById("prixpoires").textContent))
     pommes = new Fruit("pomme", parseInt(document.getElementById("prixpommes").textContent))
@@ -79,7 +79,7 @@ function Initialiser() {
 }
 
 // Méthode pour activer ou désactiver le bouton Envoyer, tout dépendamment si la case est cochée ou pas
-function Activer_Desactiver() {
+function activerDesactiver() {
     if (document.getElementById("conditions").checked) {
         document.getElementById("submit").disabled = false
     } else {
@@ -88,8 +88,8 @@ function Activer_Desactiver() {
 }
 
 // Méthode qui valide, puis qui envoie les valeurs du formulaire si le formulaire est valide
-function Envoyer() {
-    if (panier.nbfruits < 25 && ValiderCoutTotal()) {
+function envoyer() {
+    if (panier.nbfruits < 25 && validerCoutTotal()) {
         sessionStorage.setItem("panier", panier.toString()) // Inscrire le panier dans la session pour y avoir accès sur la deuxième page.
         document.getElementById("conditions").checked = false
 
@@ -101,13 +101,13 @@ function Envoyer() {
 
 // Méthode qui appelle la méthode modifierFruit(nomFruit) de l'objet panier, puis qui affiche ou pas un message d'erreur tout
 // dépendamment de la validation des valeurs fournies
-function Valider_et_Afficher(pFruits) {
+function validerEtAfficher(pFruits) {
     panier.modifierFruit(pFruits)
 
     switch (pFruits) { 
         case "peche":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal()
+                validerCoutTotal()
 
                 ajouterInvisible()
             } else {
@@ -117,7 +117,7 @@ function Valider_et_Afficher(pFruits) {
 
         case "poire":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal()
+                validerCoutTotal()
 
                 ajouterInvisible()
             } else {
@@ -127,7 +127,7 @@ function Valider_et_Afficher(pFruits) {
 
         case "pomme":
             if (panier.nbfruits < 25) {
-                ValiderCoutTotal()
+                validerCoutTotal()
 
                 ajouterInvisible()
             } else {
@@ -138,7 +138,7 @@ function Valider_et_Afficher(pFruits) {
 }
 
 // Méthode pour vérifier que le coût total est égal ou supérieur à 20$
-function ValiderCoutTotal() {
+function validerCoutTotal() {
     if (panier.total >= 20) {
         document.querySelector("#erreurfruits").classList.add('invisible')
 
