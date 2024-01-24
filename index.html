@@ -26,21 +26,21 @@
           <tr>
             <td>Sac(s) de pêches</td>
             <td id="prixpeches">10$</td>
-            <td><input type="number" id="nbpeches" name="nbpeches" min="0" value="0" onchange="Valider_et_Afficher('peches')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('peches') lors d'un changement de valeur -->
+            <td><input type="number" id="nbpeches" name="nbpeches" min="0" value="0" onchange="Valider_et_Afficher('peche')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('peches') lors d'un changement de valeur -->
             <td id="totalpeches">0$</td>
             <td id="erreurpeches" class="invisible">Le nombre de pêches doit être compris entre 0 et 24</td>
           </tr>
           <tr>
             <td>Sac(s) de poires</td>
             <td id="prixpoires">12$</td>
-            <td><input type="number" id="nbpoires" name="nbpoires" min="0" value="0" onchange="Valider_et_Afficher('poires')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('poires') lors d'un changement de valeur -->
+            <td><input type="number" id="nbpoires" name="nbpoires" min="0" value="0" onchange="Valider_et_Afficher('poire')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('poires') lors d'un changement de valeur -->
             <td id="totalpoires">0$</td>
             <td id="erreurpoires" class="invisible">Le nombre de poires doit être compris entre 0 et 24</td>
           </tr>
           <tr>
             <td>Sac(s) de pommes</td>
             <td id="prixpommes">11$</td>
-            <td><input type="number" id="nbpommes" name="nbpommes" min="0" value="0" onchange="Valider_et_Afficher('pommes')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('pommes') lors d'un changement de valeur -->
+            <td><input type="number" id="nbpommes" name="nbpommes" min="0" value="0" onchange="Valider_et_Afficher('pomme')"></td> <!-- Permet de lancer la méthode Valider_et_Afficher('pommes') lors d'un changement de valeur -->
             <td id="totalpommes">0$</td>
             <td id="erreurpommes" class="invisible">Le nombre de pommes doit être compris entre 0 et 24</td>
           </tr>
@@ -56,7 +56,7 @@
         <p>La valeur minimale des paniers est de 20$.</p>
       </div>
       <div>
-        <input id="conditions" name="conditons" type="checkbox" onchange="Activer_Desactiver()"> <!-- Permet de lancer la méthode Activer_Desactiver() lors d'un changement de valeur -->
+        <input id="conditions" name="conditions" type="checkbox" onchange="Activer_Desactiver()"> <!-- Permet de lancer la méthode Activer_Desactiver() lors d'un changement de valeur -->
         <label for="conditions">J'ai lu et j'accepte les conditions de vente.</label>
         <div>
           <input id="submit" name="submit" type="submit" onclick="return Envoyer()" disabled> <!-- Permet de lancer la méthode Envoyer() lors d'un clic, et de retourner la valeur de cette méthode -->
